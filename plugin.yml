@@ -1,0 +1,22 @@
+name: Magicks
+description: "A plugin that add some §d§lmagic§r to your world."
+author: "§6§lmaYayoh"
+version: "0.0.1"
+api-version: 1.16
+main: "fr.mayayoh.magicks.MagickPlugin"
+
+commands:
+  magick:
+    description: "§lMain command. §oUse \"/magick [help]\"."
+    usage: "/§dmagick §a<function> §b[parameter1] [parameter2] ..."
+    permission: minecraft.default_permissions
+
+  playerinfo:
+    description: "Show player's Magick Info."
+    usage: "/§dplayerinfo §c[player]"
+    permission: minecraft.default_permissions
+
+  editspells:
+    description: "Edit"
+    usage: "/§dplayerinfo §c[player]"
+    permission: minecraft.default_permissions
