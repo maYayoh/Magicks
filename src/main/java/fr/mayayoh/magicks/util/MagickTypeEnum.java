@@ -14,6 +14,9 @@ import java.util.Locale;
  * @version 1.0
  */
 public enum MagickTypeEnum {
+    /**
+     * Fire Magick Type.
+     */
     FIRE(
             ChatColor.RED + "\u24BB}ire",
             "dec65fc87c504415eff730a2f4fe7d06d2f116ea2a313481f362d0a25d65e500",
@@ -57,6 +60,10 @@ public enum MagickTypeEnum {
 
             }
     ),
+
+    /**
+     * Water Magick Type.
+     */
     WATER(
             ChatColor.BLUE + "\u24CCater",
             "9e52f7960ff3cec2f519a6353648c6e33bc51e131cc80917cf13081decbff24d",
@@ -100,6 +107,10 @@ public enum MagickTypeEnum {
 
             }
     ),
+
+    /**
+     * Plant Magick Type.
+     */
     PLANT(
             ChatColor.GREEN + "\u24C5lant",
             "684380ad4dc388f561254c8409fa704d44747eb6e5feacba343e7c243cfac6a1",
@@ -143,6 +154,10 @@ public enum MagickTypeEnum {
 
             }
     ),
+
+    /**
+     * Earth Magick Type.
+     */
     EARTH(
             ChatColor.GOLD + "\u24BAarth",
             "d774e5ef3d8bcde9ea21c34b84827d34531e68f111510f3383055ecaa74bebcc",
@@ -186,6 +201,10 @@ public enum MagickTypeEnum {
 
             }
     ),
+
+    /**
+     * Light Magick Type.
+     */
     LIGHT(
             ChatColor.YELLOW + "\u24c1ight",
             "21469ce67dfc28433aea8a45ab816e51bd39ba9eb815d22579e77698da0bf295",
@@ -229,6 +248,10 @@ public enum MagickTypeEnum {
 
             }
     ),
+
+    /**
+     * Death Magick Type.
+     */
     DEATH(
             ChatColor.DARK_PURPLE + "\u24B9eath",
             "6db32b15d7f32704ed626fa52d06fb2b4071d336fdbfe61e6e41c669d6e37f47",

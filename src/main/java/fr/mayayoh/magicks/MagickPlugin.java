@@ -1,7 +1,9 @@
 package fr.mayayoh.magicks;
 
+import fr.mayayoh.magicks.event.GeneralEvent;
 import lombok.Getter;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -11,6 +13,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.io.IOException;
 
+
+/**
+ * MagickPlugin class used as the main class.
+ *
+ * @author maYayoh
+ * @version 1.0
+ */
 public class MagickPlugin extends JavaPlugin implements Listener {
 
     @Getter private static MagickPlugin instance;
@@ -24,7 +33,7 @@ public class MagickPlugin extends JavaPlugin implements Listener {
 //        this.getCommand("playerinfo").setExecutor(new CommandPlayerInfo());
 //        this.getCommand("editspells").setExecutor(new CommandEditSpells());
 //
-//        Bukkit.getServer().getPluginManager().registerEvents(new GeneralEvents(), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new GeneralEvent(), this);
 //        Bukkit.getServer().getPluginManager().registerEvents(new InventoryEvents(), this);
 //        Bukkit.getServer().getPluginManager().registerEvents(new SpellsEvents(), this);
 
@@ -43,13 +52,12 @@ public class MagickPlugin extends JavaPlugin implements Listener {
 
         // Check if the file already exists
         if (!dataFile.exists()) {
-            if(dataFile.getParentFile().mkdirs())
-                // If not, create it
-                saveResource("magickData.yml", false);
-            else
-                // If fail to get the parent folder (for some reason), disable the plugin
-                this.getPluginLoader().disablePlugin(this);
+            // If not, create it
+            final boolean ignored = dataFile.getParentFile().mkdirs();
+            saveResource("magickData.yml", false);
         }
+
+        System.out.println(dataFile.getAbsolutePath());
 
         // Load the data from the file in a variable
         data = new YamlConfiguration();
@@ -60,12 +68,18 @@ public class MagickPlugin extends JavaPlugin implements Listener {
             // If fail to load the data, disable the plugin
             this.getPluginLoader().disablePlugin(this);
         }
+
+        //DEBUG: remove message
+        Bukkit.broadcastMessage("[!]"+ChatColor.GREEN+" Magicks has been enabled!");
     }
 
     @Override
-    public void onDisable() {}
+    public void onDisable() {
+        //DEBUG: remove message
+        Bukkit.broadcastMessage("[!]"+ChatColor.RED+" Magicks has been disabled!");
+    }
 
     public void saveData() throws IOException {
-        data.save(getDataFolder() + "/data.yml");
+        data.save(getDataFolder() + "/magickData.yml");
     }
 }
