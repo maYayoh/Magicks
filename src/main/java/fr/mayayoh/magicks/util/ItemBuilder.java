@@ -27,10 +27,10 @@ public class ItemBuilder {
      * @param texture The texture to apply to the custom head.
      * {@code amount} defaults to 1.
      * {@code displayName} defaults to a blank name.
-     * @see ItemBuilder#getCustomSkull(String, int, String, String...)
+     * @see ItemBuilder#getCustomHead(String, int, String, String...)
      * @return An ItemStack of the wanted head.
      */
-    static public ItemStack getCustomSkull(final String texture) { return getCustomSkull(texture, 1, " "); }
+    static public ItemStack getCustomHead(final String texture) { return getCustomHead(texture, 1, " "); }
 
     /**
      * Get a custom head.
@@ -38,10 +38,10 @@ public class ItemBuilder {
      * @param texture The texture to apply to the custom head.
      * @param amount The amount of items in the ItemStack.
      * {@code displayName} defaults to a blank name.
-     * @see ItemBuilder#getCustomSkull(String, int, String, String...)
+     * @see ItemBuilder#getCustomHead(String, int, String, String...)
      * @return An ItemStack of the wanted head.
      */
-    static public ItemStack getCustomSkull(final String texture, final int amount) { return getCustomSkull(texture, amount, " "); }
+    static public ItemStack getCustomHead(final String texture, final int amount) { return getCustomHead(texture, amount, " "); }
 
     /**
      * Get a custom head.
@@ -49,10 +49,10 @@ public class ItemBuilder {
      * @param texture The texture to apply to the custom head.
      * @param displayName The custom display name of the ItemStack.
      * {@code amount} defaults to 1.
-     * @see ItemBuilder#getCustomSkull(String, int, String, String...)
+     * @see ItemBuilder#getCustomHead(String, int, String, String...)
      * @return An ItemStack of the wanted head.
      */
-    static public ItemStack getCustomSkull(final String texture, final String displayName) { return getCustomSkull(texture, 1, displayName); }
+    static public ItemStack getCustomHead(final String texture, final String displayName) { return getCustomHead(texture, 1, displayName); }
 
     /**
      * Get a custom head.
@@ -60,16 +60,15 @@ public class ItemBuilder {
      * @param texture The texture to apply to the custom head.
      * @param amount The amount of items in the ItemStack.
      * @param displayName The custom display name of the ItemStack.
-     * @see GameProfile
-     * @see Method#invoke(Object, Object...)
      * @return An ItemStack of the wanted head.
      */
-    static public ItemStack getCustomSkull(final String texture, final int amount, @NotNull final String displayName, final String... displayLore) {
+    static public ItemStack getCustomHead(final String texture, final int amount, @NotNull final String displayName, final String... displayLore) {
 
-        ItemStack finalSkull = new ItemStack(Material.PLAYER_HEAD, amount);
+        final ItemStack finalSkull = new ItemStack(Material.PLAYER_HEAD, amount);
         if (texture.isEmpty()) return finalSkull;
 
-        SkullMeta skullMeta = (SkullMeta) finalSkull.getItemMeta();
+        final SkullMeta skullMeta = (SkullMeta) finalSkull.getItemMeta();
+        if (skullMeta == null) return finalSkull;
         final GameProfile profile = new GameProfile(new UUID(texture.hashCode(), texture.hashCode()), null);
 
         final String encodedData = Base64.getEncoder().encodeToString(String.format("{textures:{SKIN:{url:\"https://textures.minecraft.net/texture/%s\"}}}", texture).getBytes());
@@ -79,7 +78,7 @@ public class ItemBuilder {
             final Method mtd = skullMeta.getClass().getDeclaredMethod("setProfile", GameProfile.class);
             mtd.setAccessible(true);
             mtd.invoke(skullMeta, profile);
-        } catch (IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
+        } catch (final IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
             e.printStackTrace();
         }
 
