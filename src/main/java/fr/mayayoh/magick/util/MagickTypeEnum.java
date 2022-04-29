@@ -350,6 +350,7 @@ public enum MagickTypeEnum {
      *
      * {@code amount} defaults to 1.
      * {@code displayName} defaults to a blank name.
+     * {@code displayLore} defaults to an empty Array.
      * @see MagickTypeEnum#getIcon(int, String, String...)
      * @return An ItemStack of the wanted icon.
      */
@@ -358,8 +359,20 @@ public enum MagickTypeEnum {
     /**
      * Get the icon associated with the Magick Type.
      *
+     * @param amount The amount of essence, which will correspond the amount of item in the ItemStack.
+     * {@code displayName} defaults to a blank name.
+     * {@code displayLore} defaults to an empty Array.
+     * @see MagickTypeEnum#getIcon(int, String, String...)
+     * @return An ItemStack of the wanted icon.
+     */
+    public ItemStack getIcon(final int amount) { return getIcon(amount, " "); }
+
+    /**
+     * Get the icon associated with the Magick Type.
+     *
      * @param displayName The custom display name of the ItemStack.
      * {@code amount} defaults to 1.
+     * {@code displayLore} defaults to an empty Array.
      * @see MagickTypeEnum#getIcon(int, String, String...)
      * @return An ItemStack of the wanted icon.
      */
@@ -372,6 +385,7 @@ public enum MagickTypeEnum {
      * @param displayName The custom display name of the ItemStack.
      * @param displayLore The custom lore of the ItemStack.
      *                    Entering multiple String will create multiple lines in the lore.
+     *                    Can be empty.
      * @see ItemBuilder#getCustomHead(String, int, String, String...)
      * @return An ItemStack of the wanted icon.
      */
@@ -379,6 +393,16 @@ public enum MagickTypeEnum {
         return ItemBuilder.getCustomHead(this.texture, amount, displayName, displayLore);
     }
 
+
+    /**
+     * Get the icon associated with the Magick Type with an essence's value of zero.
+     *
+     * {@code displayName} defaults to a blank name.
+     * {@code displayLore} defaults to an empty Array.
+     * @see MagickTypeEnum#getZeroIcon(String, String...)
+     * @return An ItemStack of the wanted icon.
+     */
+    public ItemStack getZeroIcon() { return getIcon(1, " "); }
 
     /**
      * Get the icon associated with the Magick Type with an essence's value of zero.

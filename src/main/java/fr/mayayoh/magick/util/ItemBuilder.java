@@ -38,6 +38,112 @@ public class ItemBuilder {
         itemStack.setItemMeta(meta);
     }
 
+    /**
+     * Create an ItemStack.
+     *
+     * @param material The material of the ItemStack.
+     * {@code amount} defaults to 1.
+     * {@code isGlowing} defaults to false.
+     * {@code displayName} defaults to a blank name.
+     * {@code displayLore} defaults to an empty Array.
+     * @see ItemBuilder#createItem(Material, int, boolean, String, String...)
+     * @return An ItemStack.
+     */
+    public static ItemStack createItem(final Material material) {
+        return createItem(material, 1, false, " ");
+    }
+
+    /**
+     * Create an ItemStack.
+     *
+     * @param material The material of the ItemStack.
+     * @param amount The amount of items in the ItemStack.
+     * {@code isGlowing} defaults to false.
+     * {@code displayName} defaults to a blank name.
+     * {@code displayLore} defaults to an empty Array.
+     * @see ItemBuilder#createItem(Material, int, boolean, String, String...)
+     * @return An ItemStack.
+     */
+    public static ItemStack createItem(final Material material, final int amount) { return createItem(material, amount, false, " "); }
+
+    /**
+     * Create an ItemStack.
+     *
+     * @param material The material of the ItemStack.
+     * @param isGlowing If the ItemStack have an enchanted glint.
+     * {@code amount} defaults to 1.
+     * {@code displayName} defaults to a blank name.
+     * {@code displayLore} defaults to an empty Array.
+     * @see ItemBuilder#createItem(Material, int, boolean, String, String...)
+     * @return An ItemStack.
+     */
+    public static ItemStack createItem(final Material material, final boolean isGlowing) { return createItem(material, 1, isGlowing, " "); }
+
+    /**
+     * Create an ItemStack.
+     *
+     * @param material The material of the ItemStack.
+     * @param amount The amount of items in the ItemStack.
+     * @param isGlowing If the ItemStack have an enchanted glint.
+     * {@code displayName} defaults to a blank name.
+     * {@code displayLore} defaults to an empty Array.
+     * @see ItemBuilder#createItem(Material, int, boolean, String, String...)
+     * @return An ItemStack.
+     */
+    public static ItemStack createItem(final Material material, final int amount, final boolean isGlowing) { return createItem(material, amount, isGlowing, " "); }
+
+    /**
+     * Create an ItemStack.
+     *
+     * @param material The material of the ItemStack.
+     * @param amount The amount of items in the ItemStack.
+     * @param displayName The custom display name of the ItemStack.
+     * {@code isGlowing} defaults to false.
+     * {@code displayLore} defaults to an empty Array.
+     * @see ItemBuilder#createItem(Material, int, boolean, String, String...)
+     * @return An ItemStack.
+     */
+    public static ItemStack createItem(final Material material, final int amount, @NotNull final String displayName) { return createItem(material, amount, false, displayName); }
+
+    /**
+     * Create an ItemStack.
+     *
+     * @param material The material of the ItemStack.
+     * @param isGlowing If the ItemStack have an enchanted glint.
+     * @param displayName The custom display name of the ItemStack.
+     * {@code amount} defaults to 1.
+     * {@code displayLore} defaults to an empty Array.
+     * @see ItemBuilder#createItem(Material, int, boolean, String, String...)
+     * @return An ItemStack.
+     */
+    public static ItemStack createItem(final Material material, final boolean isGlowing, @NotNull final String displayName) { return createItem(material, 1, isGlowing, displayName); }
+
+    /**
+     * Create an ItemStack.
+     *
+     * @param material The material of the ItemStack.
+     * @param amount The amount of items in the ItemStack.
+     * @param displayName The custom display name of the ItemStack.
+     * @param displayLore The custom lore of the ItemStack.
+     *                    Entering multiple String will create multiple lines in the lore.
+     *                    Can be empty.
+     * @return An ItemStack.
+     */
+    public static ItemStack createItem(final Material material, final int amount, final boolean isGlowing, @NotNull final String displayName, final String... displayLore) {
+        final ItemStack item = new ItemStack(material, amount);
+
+        final ItemMeta meta = item.getItemMeta();
+        Validate.notNull(meta, "The ItemStack doesn't have any ItemMeta.");
+
+        meta.setDisplayName(displayName);
+        meta.setLore(Arrays.asList(displayLore));
+        item.setItemMeta(meta);
+
+        if (isGlowing)
+            addGlint(item);
+
+        return item;
+    }
 
 
     /**
@@ -46,6 +152,7 @@ public class ItemBuilder {
      * @param texture The texture to apply to the custom head.
      * {@code amount} defaults to 1.
      * {@code displayName} defaults to a blank name.
+     * {@code displayLore} defaults to an empty Array.
      * @see ItemBuilder#getCustomHead(String, int, String, String...)
      * @return An ItemStack of the wanted head.
      */
@@ -57,6 +164,7 @@ public class ItemBuilder {
      * @param texture The texture to apply to the custom head.
      * @param amount The amount of items in the ItemStack.
      * {@code displayName} defaults to a blank name.
+     * {@code displayLore} defaults to an empty Array.
      * @see ItemBuilder#getCustomHead(String, int, String, String...)
      * @return An ItemStack of the wanted head.
      */
@@ -68,6 +176,7 @@ public class ItemBuilder {
      * @param texture The texture to apply to the custom head.
      * @param displayName The custom display name of the ItemStack.
      * {@code amount} defaults to 1.
+     * {@code displayLore} defaults to an empty Array.
      * @see ItemBuilder#getCustomHead(String, int, String, String...)
      * @return An ItemStack of the wanted head.
      */
@@ -79,6 +188,9 @@ public class ItemBuilder {
      * @param texture The texture to apply to the custom head.
      * @param amount The amount of items in the ItemStack.
      * @param displayName The custom display name of the ItemStack.
+     * @param displayLore The custom lore of the ItemStack.
+     *                    Entering multiple String will create multiple lines in the lore.
+     *                    Can be empty.
      * @return An ItemStack of the wanted head.
      */
     static public ItemStack getCustomHead(final String texture, final int amount, @NotNull final String displayName, final String... displayLore) {
@@ -87,7 +199,7 @@ public class ItemBuilder {
         if (texture.isEmpty()) return finalSkull;
 
         final SkullMeta skullMeta = (SkullMeta) finalSkull.getItemMeta();
-        if (skullMeta == null) return finalSkull;
+        Validate.notNull(skullMeta, "The ItemStack doesn't have any ItemMeta.");
         final GameProfile profile = new GameProfile(new UUID(texture.hashCode(), texture.hashCode()), null);
 
         final String encodedData = Base64.getEncoder().encodeToString(String.format("{textures:{SKIN:{url:\"https://textures.minecraft.net/texture/%s\"}}}", texture).getBytes());
