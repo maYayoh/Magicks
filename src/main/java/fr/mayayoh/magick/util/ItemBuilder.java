@@ -1,9 +1,13 @@
-package fr.mayayoh.magicks.util;
+package fr.mayayoh.magick.util;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
+import org.apache.commons.lang.Validate;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.jetbrains.annotations.NotNull;
 
@@ -20,6 +24,21 @@ import java.util.UUID;
  * @version 1.0
  */
 public class ItemBuilder {
+
+    /**
+     * Add an enchanted glint to an ItemStack
+     *
+     * @param itemStack The ItemStack that will get glint.
+     */
+    public static void addGlint(final ItemStack itemStack) {
+        final ItemMeta meta = itemStack.getItemMeta();
+        Validate.notNull(meta, "The ItemStack doesn't have any ItemMeta.");
+        meta.addEnchant(Enchantment.LURE, 0, false);
+        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        itemStack.setItemMeta(meta);
+    }
+
+
 
     /**
      * Get a custom head.

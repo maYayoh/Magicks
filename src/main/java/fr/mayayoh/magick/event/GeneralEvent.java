@@ -1,7 +1,8 @@
-package fr.mayayoh.magicks.event;
+package fr.mayayoh.magick.event;
 
-import fr.mayayoh.magicks.MagickPlugin;
-import fr.mayayoh.magicks.util.RandomLib;
+import fr.mayayoh.magick.MagickPlugin;
+import fr.mayayoh.magick.util.MagickRegistry;
+import fr.mayayoh.magick.util.lib.RandomLib;
 
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
@@ -59,5 +60,9 @@ public class GeneralEvent implements Listener {
     @EventHandler
     public void onPlayerLeave(final PlayerQuitEvent e) {
         e.setQuitMessage("[" + ChatColor.RED + "-" + ChatColor.RESET + "] " + e.getPlayer().getName());
+        if (MagickRegistry.getInstance().isPlayerInMagick(e.getPlayer())) {
+            MagickRegistry.getInstance().loadInventory(e.getPlayer());
+            MagickRegistry.getInstance().setMode(e.getPlayer(), false);
+        }
     }
 }

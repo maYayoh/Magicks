@@ -1,11 +1,9 @@
-package fr.mayayoh.magicks.util;
+package fr.mayayoh.magick.util;
 
 import lombok.Getter;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Locale;
 
 /**
  * MagickTypeEnum enum used to get all information linked to a Magick type.
@@ -336,7 +334,7 @@ public enum MagickTypeEnum {
      * @param id The ID between 1 and 6.
      * @return The Magick type.
      */
-    public MagickTypeEnum getById(final int id) {
+    public static MagickTypeEnum getById(final int id) {
         for (MagickTypeEnum t : MagickTypeEnum.values()) {
             if (t.getId() == id) {
                 return t;

@@ -1,4 +1,4 @@
-package fr.mayayoh.magicks.util;
+package fr.mayayoh.magick.util.lib;
 
 import java.util.Random;
 

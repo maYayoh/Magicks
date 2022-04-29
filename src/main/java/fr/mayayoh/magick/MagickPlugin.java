@@ -1,6 +1,7 @@
-package fr.mayayoh.magicks;
+package fr.mayayoh.magick;
 
-import fr.mayayoh.magicks.event.GeneralEvent;
+import fr.mayayoh.magick.event.GeneralEvent;
+import fr.mayayoh.magick.util.MagickRegistry;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -68,15 +69,19 @@ public class MagickPlugin extends JavaPlugin implements Listener {
             // If fail to load the data, disable the plugin
             this.getPluginLoader().disablePlugin(this);
         }
-
-        //DEBUG: remove message
-        Bukkit.broadcastMessage("[!]"+ChatColor.GREEN+" Magicks has been enabled!");
     }
 
     @Override
     public void onDisable() {
-        //DEBUG: remove message
-        Bukkit.broadcastMessage("[!]"+ChatColor.RED+" Magicks has been disabled!");
+
+        Bukkit.getServer().getOnlinePlayers().forEach(player -> {
+
+            if (MagickRegistry.getInstance().isPlayerInMagick(player)) {
+                MagickRegistry.getInstance().loadInventory(player);
+                MagickRegistry.getInstance().setMode(player, false);
+            }
+
+        });
     }
 
     public void saveData() throws IOException {
