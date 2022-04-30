@@ -7,6 +7,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.UUID;
+
 /**
  * MagickLib class used to get data related to the Magick Plugin.
  *
@@ -15,33 +17,45 @@ import org.jetbrains.annotations.NotNull;
  */
 public final class MagickLib {
 
-    public static String getMagickData(final String path, final Player p) {
-        String data = MagickPlugin.getInstance().getData().getString("players." + p.getUniqueId() + ".magic." + path);
+    public static String getMagickData(final String path, final Player p) { return getMagickData(path, p.getUniqueId()); }
+    public static String getMagickData(final String path, final UUID u) {
+        final String data = MagickPlugin.getInstance().getData().getString("players." + u + ".magic." + path);
         return (data != null ? data : "0");
     }
-    public static void setMagickData(final Player p, final String path, final String val) {
-        MagickPlugin.getInstance().getData().set("players." + p.getUniqueId() + ".magic." + path, val);
+
+    public static MagickTypeEnum getMagickType(final Player p, final boolean isFirstType) { return getMagickType(p.getUniqueId(), isFirstType); }
+    public static MagickTypeEnum getMagickType(final UUID u, final boolean isFirstType) {
+        return MagickTypeEnum.getById(Integer.parseInt(getMagickData((isFirstType ? "first" : "second") + ".type", u)));
     }
 
-    public static ItemStack[] getSpellList(final Player p, final String t) {
-        final MagickTypeEnum magickType = MagickTypeEnum.getById(Integer.parseInt(getMagickData(t + ".type", p)));
+    public static void setMagickData(final Player p, final String path, final String val) { setMagickData(p.getUniqueId(), path, val); }
+    public static void setMagickData(final UUID u, final String path, final String val) {
+        MagickPlugin.getInstance().getData().set("players." + u + ".magic." + path, val);
+    }
+
+
+    public static ItemStack[] getSpellList(final Player p, final boolean isFirstType) { return getSpellList(p.getUniqueId(), isFirstType); }
+    public static ItemStack[] getSpellList(final UUID u, final boolean isFirstType) {
+        final MagickTypeEnum magickType = getMagickType(u, isFirstType);
         return magickType == null ? null : magickType.getSpellList();
     }
 
+    @NotNull public static ItemStack[] getSpellConfig(final Player p) { return getSpellConfig(p.getUniqueId()); }
     @NotNull
-    public static ItemStack[] getSpellConfig(final Player p) {
+    public static ItemStack[] getSpellConfig(final UUID u) {
         final ItemStack air = new ItemStack(Material.AIR);
         ItemStack[] spells = new ItemStack[]{air, air, air, air, air, air, air, air, air};
-        final ItemStack[] p1spells = getSpellList(p, "first");
-        final ItemStack[] p2spells = getSpellList(p, "second");
+        final ItemStack[] p1spells = getSpellList(u, true);
+        final ItemStack[] p2spells = getSpellList(u, false);
         if (p1spells == null || p2spells == null) return spells;
 
+        String slot;
         for (int i=1; i<10; i++) {
-            String slot = getMagickData("first.spells." + i + ".slot", p);
+            slot = getMagickData("first.spells." + i + ".slot", u);
             if(!slot.equals("-1"))
                 spells[Integer.parseInt(slot)] = p1spells[i-1];
 
-            slot = getMagickData("second.spells." + i + ".slot", p);
+            slot = getMagickData("second.spells." + i + ".slot", u);
             if(!slot.equals("-1"))
                 spells[Integer.parseInt(slot)] = p2spells[i-1];
         }
