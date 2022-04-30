@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class MagickRegistry {
+public final class MagickRegistry {
     private static MagickRegistry instance = null;
 
     private final Map<UUID, ItemStack[]> inventoryBackups;

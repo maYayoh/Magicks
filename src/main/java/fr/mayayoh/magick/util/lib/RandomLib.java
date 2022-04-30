@@ -2,7 +2,13 @@ package fr.mayayoh.magick.util.lib;
 
 import java.util.Random;
 
-public class RandomLib {
+/**
+ * RandomLib class used to generate pseudorandom numbers.
+ *
+ * @author PandaLunatique
+ * @version 1.0
+ */
+public final class RandomLib {
 
     public static boolean chanceOutOf(final int percentage) { return chanceOutOf(percentage, 100); }
 

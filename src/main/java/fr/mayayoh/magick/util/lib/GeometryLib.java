@@ -7,8 +7,14 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class GeometryLib {
-    // Geometric Methods
+/**
+ * GeometryLib class used to get positions from shapes.
+ *
+ * @author maYayoh, PandaLunatique
+ * @version 1.0
+ */
+public final class GeometryLib {
+
     public static Location[] getLinePositions(final Location p1, final Location p2, final int n) {
 
         Location[] loc = new Location[n];

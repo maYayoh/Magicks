@@ -7,7 +7,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
-public class MagickLib {
+/**
+ * MagickLib class used to get data related to the Magick Plugin.
+ *
+ * @author maYayoh
+ * @version 1.0
+ */
+public final class MagickLib {
 
     public static String getMagickData(final String path, final Player p) {
         String data = MagickPlugin.getInstance().getData().getString("players." + p.getUniqueId() + ".magic." + path);

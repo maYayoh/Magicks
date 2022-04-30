@@ -23,7 +23,7 @@ import java.util.UUID;
  * @author maYayoh
  * @version 1.0
  */
-public class ItemBuilder {
+public final class ItemBuilder {
 
     /**
      * Add an enchanted glint to an ItemStack

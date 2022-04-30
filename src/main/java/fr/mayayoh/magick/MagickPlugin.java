@@ -1,6 +1,8 @@
 package fr.mayayoh.magick;
 
+import fr.mayayoh.magick.command.GhostCommand;
 import fr.mayayoh.magick.event.GeneralEvent;
+import fr.mayayoh.magick.event.SpellEvent;
 import fr.mayayoh.magick.util.MagickRegistry;
 import lombok.Getter;
 import org.bukkit.Bukkit;
@@ -21,7 +23,7 @@ import java.io.IOException;
  * @author maYayoh
  * @version 1.0
  */
-public class MagickPlugin extends JavaPlugin implements Listener {
+public final class MagickPlugin extends JavaPlugin implements Listener {
 
     @Getter private static MagickPlugin instance;
     @Getter private FileConfiguration data;
@@ -57,8 +59,6 @@ public class MagickPlugin extends JavaPlugin implements Listener {
             final boolean ignored = dataFile.getParentFile().mkdirs();
             saveResource("magickData.yml", false);
         }
-
-        System.out.println(dataFile.getAbsolutePath());
 
         // Load the data from the file in a variable
         data = new YamlConfiguration();

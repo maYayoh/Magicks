@@ -3,7 +3,7 @@ description: "A plugin that add some §d§lmagic§r to your world."
 author: "§6§lmaYayoh"
 version: "0.0.1"
 api-version: 1.16
-main: "fr.mayayoh.magicks.MagickPlugin"
+main: "fr.mayayoh.magick.MagickPlugin"
 
 commands:
   magick:
