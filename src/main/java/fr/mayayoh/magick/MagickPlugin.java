@@ -1,12 +1,13 @@
 package fr.mayayoh.magick;
 
-import fr.mayayoh.magick.command.GhostCommand;
+import fr.mayayoh.magick.command.EditSpellCommand;
+import fr.mayayoh.magick.command.MagickCommand;
+import fr.mayayoh.magick.command.PlayerInfoCommand;
 import fr.mayayoh.magick.event.GeneralEvent;
-import fr.mayayoh.magick.event.SpellEvent;
+import fr.mayayoh.magick.event.InventoryEvent;
 import fr.mayayoh.magick.util.MagickRegistry;
 import lombok.Getter;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -15,6 +16,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Objects;
 
 
 /**
@@ -33,11 +35,11 @@ public final class MagickPlugin extends JavaPlugin implements Listener {
         MagickPlugin.instance = this;
 
 //        this.getCommand("magick").setExecutor(new CommandMagick());
-//        this.getCommand("playerinfo").setExecutor(new CommandPlayerInfo());
+        Objects.requireNonNull(this.getCommand("playerinfo")).setExecutor(new PlayerInfoCommand());
 //        this.getCommand("editspells").setExecutor(new CommandEditSpells());
 //
         Bukkit.getServer().getPluginManager().registerEvents(new GeneralEvent(), this);
-//        Bukkit.getServer().getPluginManager().registerEvents(new InventoryEvents(), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new InventoryEvent(), this);
 //        Bukkit.getServer().getPluginManager().registerEvents(new SpellsEvents(), this);
 
 

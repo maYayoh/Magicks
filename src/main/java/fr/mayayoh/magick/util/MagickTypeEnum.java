@@ -12,17 +12,19 @@ import org.jetbrains.annotations.NotNull;
  * @version 1.0
  */
 public enum MagickTypeEnum {
+    NONE(),
+
     /**
      * Fire Magick Type.
      */
     FIRE(
-            ChatColor.RED + "\u24BB}ire",
+            ChatColor.RED + "\u24BBire",
             "dec65fc87c504415eff730a2f4fe7d06d2f116ea2a313481f362d0a25d65e500",
             "7619bf62863ec11577d6ef65efdc3f9de4df414202ed1ff1de9ec76b61a3f667",
             new ItemStack[]{
                     // Spell 1
                     ItemBuilder.getCustomHead("64b1b9ce2e9a6ce8a985d39776e2908077b82e6a333d2a81a441438eab39f8e1",
-                            1, ChatColor.RED + "Fire Wave", ChatColor.DARK_GRAY.toString() + ChatColor.ITALIC + "\u24BB}ire Spell"),
+                            1, ChatColor.RED + "Fire Wave", ChatColor.DARK_GRAY.toString() + ChatColor.ITALIC + "\u24BBire Spell"),
 
                     // Spell 2 | Missing texture
                     ItemBuilder.getCustomHead("4e2ce3372a3ac97fdda5638bef24b3bc49f4facf751fe9cad645f15a7fb8397c",
@@ -295,11 +297,37 @@ public enum MagickTypeEnum {
     );
 
 
-    @Getter final private String display;
+    final private String display;
     final private String texture;
     final private String textureZero;
     @Getter final private ItemStack[] spellList;
 
+    /**
+     * MagickTypeEnum constructor.
+     *
+     * @author maYayoh
+     * {@code display} defaults to Error.
+     * {@code texture} defaults to a texture of missing block.
+     * {@code textureZero} defaults to {@code texture}.
+     * {@code spellList} defaults to an Array of 9 ItemStack (custom heads) with {@code texture}.
+     * @see MagickTypeEnum#MagickTypeEnum(String, String, String, ItemStack[])
+     */
+    MagickTypeEnum() {
+        this.display = "Error";
+        this.texture = "4e2ce3372a3ac97fdda5638bef24b3bc49f4facf751fe9cad645f15a7fb8397c";
+        this.textureZero = texture;
+        this.spellList = new ItemStack[]{
+                ItemBuilder.getCustomHead(texture),
+                ItemBuilder.getCustomHead(texture),
+                ItemBuilder.getCustomHead(texture),
+                ItemBuilder.getCustomHead(texture),
+                ItemBuilder.getCustomHead(texture),
+                ItemBuilder.getCustomHead(texture),
+                ItemBuilder.getCustomHead(texture),
+                ItemBuilder.getCustomHead(texture),
+                ItemBuilder.getCustomHead(texture),
+        };
+    }
 
 
     /**
@@ -326,7 +354,7 @@ public enum MagickTypeEnum {
      *
      * @return The ID.
      */
-    public int getId() { return this.ordinal()+1; }
+    public int getId() { return this.ordinal(); }
 
     /**
      * Get the Magick Type associated with the ID.
@@ -340,7 +368,7 @@ public enum MagickTypeEnum {
                 return t;
             }
         }
-        return null;
+        return MagickTypeEnum.NONE;
     }
 
 
@@ -459,6 +487,16 @@ public enum MagickTypeEnum {
         } catch (final NullPointerException e) {
             return null;
         }
+    }
 
+
+
+    /**
+     * Returns the display for the Magick Type.
+     *
+     * @return The display of the Magick Type.
+     */
+    public String toString() {
+        return this.display;
     }
 }
