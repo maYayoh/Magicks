@@ -15,36 +15,36 @@ import java.util.UUID;
 public class PlayerInfoCommand implements CommandExecutor {
 
     public boolean onCommand(@NotNull final CommandSender sender, @NotNull final Command cmd, @NotNull final String label, final String[] args) {
-        if (sender instanceof Player p)
-            playerInfo(p, args);
+        if (sender instanceof Player player)
+            playerInfo(player, args);
         else
             showConsoleError(sender);
         return true;
     }
 
-    public void playerInfo(@NotNull final Player p, final String[] args) {
+    public static void playerInfo(@NotNull final Player sender, final String[] args) {
         if (args.length == 0) {
-            new PlayerInfoMenu(p, p).openInventory();
+            new PlayerInfoMenu(sender, sender).openInventory();
         } else {
             if (!args[0].equals("help") && !args[0].equals("?")) {
                 if (Bukkit.getPlayer(args[0]) != null || Bukkit.getPlayer(UUID.fromString(args[0])) != null) {
-                    new PlayerInfoMenu(p, Bukkit.getPlayer(args[0])).openInventory();
+                    new PlayerInfoMenu(sender, Bukkit.getPlayer(args[0])).openInventory();
                 } else
-                    showHelp(p, args[0]);
+                    showHelp(sender, args[0]);
             } else
-                this.showHelp(p);
+                showHelp(sender);
         }
     }
 
-    private void showConsoleError(final CommandSender p) {
-        p.sendMessage(ChatColor.GOLD + "/!\\ " + ChatColor.RED + "You can't use this command from where you are!" + ChatColor.RESET);
+    private static void showConsoleError(final CommandSender sender) {
+        sender.sendMessage(ChatColor.GOLD + "/!\\ " + ChatColor.RED + "You can't use this command from where you are!" + ChatColor.RESET);
     }
 
-    private void showHelp(final CommandSender p) {
-        this.showHelp(p, "dontSendInvalidArg");
+    private static void showHelp(final CommandSender sender) {
+        showHelp(sender, "dontSendInvalidArg");
     }
 
-    private void showHelp(final CommandSender p, final String invalidArg) {
+    private static void showHelp(final CommandSender sender, final String invalidArg) {
         String message = "";
         if (!invalidArg.equals("dontSendInvalidArg")) {
             message += ChatColor.GOLD + "/!\\ " + ChatColor.RESET + ChatColor.BOLD + invalidArg + ChatColor.RESET + ChatColor.RED + " isn't a valid player (offline or doesn't exist).";
@@ -54,7 +54,7 @@ public class PlayerInfoCommand implements CommandExecutor {
                     "|- [player] : If specified, show the Magick Info of the player (must be online). Else, show the Magick Info of the sender.";
         }
 
-        p.sendMessage(message);
+        sender.sendMessage(message);
     }
 
 }

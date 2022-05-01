@@ -98,12 +98,14 @@ public final class ItemBuilder {
      * @param material The material of the ItemStack.
      * @param amount The amount of items in the ItemStack.
      * @param displayName The custom display name of the ItemStack.
+     * @param displayLore The custom lore of the ItemStack.
+     *                    Entering multiple String will create multiple lines in the lore.
+     *                    Can be empty.
      * {@code isGlowing} defaults to false.
-     * {@code displayLore} defaults to an empty Array.
      * @see ItemBuilder#createItem(Material, int, boolean, String, String...)
      * @return An ItemStack.
      */
-    public static ItemStack createItem(final Material material, final int amount, @NotNull final String displayName) { return createItem(material, amount, false, displayName); }
+    public static ItemStack createItem(final Material material, final int amount, @NotNull final String displayName, final String... displayLore) { return createItem(material, amount, false, displayName, displayLore); }
 
     /**
      * Create an ItemStack.
@@ -111,12 +113,14 @@ public final class ItemBuilder {
      * @param material The material of the ItemStack.
      * @param isGlowing If the ItemStack have an enchanted glint.
      * @param displayName The custom display name of the ItemStack.
+     * @param displayLore The custom lore of the ItemStack.
+     *                    Entering multiple String will create multiple lines in the lore.
+     *                    Can be empty.
      * {@code amount} defaults to 1.
-     * {@code displayLore} defaults to an empty Array.
      * @see ItemBuilder#createItem(Material, int, boolean, String, String...)
      * @return An ItemStack.
      */
-    public static ItemStack createItem(final Material material, final boolean isGlowing, @NotNull final String displayName) { return createItem(material, 1, isGlowing, displayName); }
+    public static ItemStack createItem(final Material material, final boolean isGlowing, @NotNull final String displayName, final String... displayLore) { return createItem(material, 1, isGlowing, displayName, displayLore); }
 
     /**
      * Create an ItemStack.
@@ -175,12 +179,14 @@ public final class ItemBuilder {
      *
      * @param texture The texture to apply to the custom head.
      * @param displayName The custom display name of the ItemStack.
+     * @param displayLore The custom lore of the ItemStack.
+     *                    Entering multiple String will create multiple lines in the lore.
+     *                    Can be empty.
      * {@code amount} defaults to 1.
-     * {@code displayLore} defaults to an empty Array.
      * @see ItemBuilder#getCustomHead(String, int, String, String...)
      * @return An ItemStack of the wanted head.
      */
-    static public ItemStack getCustomHead(final String texture, final String displayName) { return getCustomHead(texture, 1, displayName); }
+    static public ItemStack getCustomHead(final String texture, final String displayName, final String... displayLore) { return getCustomHead(texture, 1, displayName, displayLore); }
 
     /**
      * Get a custom head.

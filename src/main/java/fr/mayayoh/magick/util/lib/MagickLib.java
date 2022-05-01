@@ -2,7 +2,6 @@ package fr.mayayoh.magick.util.lib;
 
 import fr.mayayoh.magick.MagickPlugin;
 import fr.mayayoh.magick.util.MagickTypeEnum;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -43,8 +42,7 @@ public final class MagickLib {
     @NotNull public static ItemStack[] getSpellConfig(final Player p) { return getSpellConfig(p.getUniqueId()); }
     @NotNull
     public static ItemStack[] getSpellConfig(final UUID u) {
-        final ItemStack air = new ItemStack(Material.AIR);
-        ItemStack[] spells = new ItemStack[]{air, air, air, air, air, air, air, air, air};
+        ItemStack[] spells = new ItemStack[]{ null, null, null, null, null, null, null, null, null };
         final ItemStack[] p1spells = getSpellList(u, true);
         final ItemStack[] p2spells = getSpellList(u, false);
         if (p1spells == null || p2spells == null) return spells;

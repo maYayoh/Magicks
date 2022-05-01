@@ -101,8 +101,8 @@ public class LevelEditorMenu extends GUIClass {
         inv.setItem(2, ItemBuilder.createItem(p1Lvl != 21 ? Material.LIME_STAINED_GLASS_PANE : Material.LIME_STAINED_GLASS, 1, false, ChatColor.RESET + (p1Lvl != 21 ? ChatColor.GREEN + "+1" : ChatColor.DARK_GREEN + "LEVEL MAX")));
         inv.setItem(6, ItemBuilder.createItem(p2Lvl != 20 ? Material.LIME_STAINED_GLASS_PANE : Material.LIME_STAINED_GLASS, 1, false, ChatColor.RESET + (p2Lvl != 20 ? ChatColor.GREEN + "+1" : ChatColor.DARK_GREEN + "LEVEL MAX")));
 
-        inv.setItem(20, ItemBuilder.createItem(p1Lvl != 0 ? Material.RED_STAINED_GLASS_PANE : Material.RED_STAINED_GLASS, 128, false, ChatColor.RESET + (p1Lvl != 0 ? ChatColor.RED + "-1" : ChatColor.DARK_RED + "LEVEL MIN")));
-        inv.setItem(24, ItemBuilder.createItem(p2Lvl != 0 ? Material.RED_STAINED_GLASS_PANE : Material.RED_STAINED_GLASS, 128, false, ChatColor.RESET + (p2Lvl != 0 ? ChatColor.RED + "-1" : ChatColor.DARK_RED + "LEVEL MIN")));
+        inv.setItem(20, ItemBuilder.createItem(p1Lvl != 0 ? Material.RED_STAINED_GLASS_PANE : Material.RED_STAINED_GLASS, 1, false, ChatColor.RESET + (p1Lvl != 0 ? ChatColor.RED + "-1" : ChatColor.DARK_RED + "LEVEL MIN")));
+        inv.setItem(24, ItemBuilder.createItem(p2Lvl != 0 ? Material.RED_STAINED_GLASS_PANE : Material.RED_STAINED_GLASS, 1, false, ChatColor.RESET + (p2Lvl != 0 ? ChatColor.RED + "-1" : ChatColor.DARK_RED + "LEVEL MIN")));
 
         inv.setItem(11, firstType.getIcon(ChatColor.RESET + "Current " + firstType +
                 ChatColor.RESET + " Level: " + (p1Lvl == 21 ? "Master" : p1Lvl)));

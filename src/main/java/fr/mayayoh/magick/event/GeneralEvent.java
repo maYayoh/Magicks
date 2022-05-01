@@ -64,5 +64,12 @@ public class GeneralEvent implements Listener {
             MagickRegistry.getInstance().loadInventory(e.getPlayer());
             MagickRegistry.getInstance().setMode(e.getPlayer(), false);
         }
+
+        try {
+            MagickPlugin.getInstance().saveData();
+        } catch (final IOException ex) {
+            ex.printStackTrace();
+            MagickPlugin.getInstance().getPluginLoader().disablePlugin(MagickPlugin.getInstance());
+        }
     }
 }

@@ -2,7 +2,6 @@ package fr.mayayoh.magick.gui;
 
 import fr.mayayoh.magick.MagickPlugin;
 import fr.mayayoh.magick.util.MagickRegistry;
-import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -10,7 +9,7 @@ import org.bukkit.inventory.Inventory;
 
 public abstract class GUIClass {
     protected Inventory inv;
-    @Getter protected final Player viewer;
+    protected final Player viewer;
 
     public GUIClass(final Player v) {
         this.viewer = v;

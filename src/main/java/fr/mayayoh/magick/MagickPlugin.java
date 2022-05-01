@@ -7,6 +7,7 @@ import fr.mayayoh.magick.event.GeneralEvent;
 import fr.mayayoh.magick.event.InventoryEvent;
 import fr.mayayoh.magick.util.MagickRegistry;
 import lombok.Getter;
+import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -72,6 +73,7 @@ public final class MagickPlugin extends JavaPlugin implements Listener {
         }
     }
 
+    @SneakyThrows
     @Override
     public void onDisable() {
 
@@ -83,6 +85,8 @@ public final class MagickPlugin extends JavaPlugin implements Listener {
             }
 
         });
+
+        this.saveData();
     }
 
     public void saveData() throws IOException {

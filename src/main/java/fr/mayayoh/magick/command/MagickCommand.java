@@ -19,9 +19,9 @@ public class MagickCommand implements CommandExecutor {
                 case "playerinfo" -> {
                     final String[] pInfoArgs = new String[args.length - 2];
                     System.arraycopy(args, 1, pInfoArgs, 0, pInfoArgs.length);
-                    new PlayerInfoCommand().playerInfo((Player) sender, pInfoArgs);
+                    PlayerInfoCommand.playerInfo((Player) sender, pInfoArgs);
                 }
-                case "editspells" -> new EditSpellCommand().editSpells((Player) sender);
+                case "editspells" -> EditSpellCommand.editSpells((Player) sender);
                 case "?", "help" -> this.showHelp(sender);
                 default -> this.showHelp(sender, args[0]);
             }
@@ -29,11 +29,11 @@ public class MagickCommand implements CommandExecutor {
         return true;
     }
 
-    private void showHelp(final CommandSender s) {
-        this.showHelp(s, "dontSendInvalidArg");
+    private void showHelp(final CommandSender sender) {
+        this.showHelp(sender, "dontSendInvalidArg");
     }
 
-    private void showHelp(final CommandSender s, final String invalidArg) {
+    private void showHelp(final CommandSender sender, final String invalidArg) {
         String message = "";
         if (!invalidArg.equals("dontSendInvalidArg"))
             message += "The argument \"" + ChatColor.RED + invalidArg + ChatColor.RESET + "\" is not a valid one.\n" + ChatColor.ITALIC + "Check below for the syntax.\n";
@@ -41,13 +41,13 @@ public class MagickCommand implements CommandExecutor {
         message += ChatColor.BOLD + "Help Page for " + ChatColor.RESET + "/" + ChatColor.LIGHT_PURPLE + "magicks" + ChatColor.RESET + ChatColor.BOLD + " :\n" + ChatColor.RESET + ChatColor.ITALIC + "Use \"/magicks <function> help\" to check the help for that function.\n\n" + ChatColor.RESET +
                 "Usage: /magicks <function> [parameter1] [parameter2] ...\n";
 
-        if (s instanceof Player)
+        if (sender instanceof Player)
             message += """
                     |- playerinfo [player] : Show player's Magick Info.
                     |- editspells : Edit your spell configuration.
                     """;
 
-        s.sendMessage(message);
+        sender.sendMessage(message);
     }
 }
 

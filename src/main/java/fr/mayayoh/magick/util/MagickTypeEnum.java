@@ -1,5 +1,6 @@
 package fr.mayayoh.magick.util;
 
+import fr.mayayoh.magick.spell.SpellClass;
 import lombok.Getter;
 import org.bukkit.ChatColor;
 import org.bukkit.inventory.ItemStack;
@@ -363,9 +364,9 @@ public enum MagickTypeEnum {
      * @return The Magick type.
      */
     public static MagickTypeEnum getById(final int id) {
-        for (MagickTypeEnum t : MagickTypeEnum.values()) {
-            if (t.getId() == id) {
-                return t;
+        for (MagickTypeEnum type : MagickTypeEnum.values()) {
+            if (type.getId() == id) {
+                return type;
             }
         }
         return MagickTypeEnum.NONE;
@@ -399,12 +400,14 @@ public enum MagickTypeEnum {
      * Get the icon associated with the Magick Type.
      *
      * @param displayName The custom display name of the ItemStack.
+     * @param displayLore The custom lore of the ItemStack.
+     *                    Entering multiple String will create multiple lines in the lore.
+     *                    Can be empty.
      * {@code amount} defaults to 1.
-     * {@code displayLore} defaults to an empty Array.
      * @see MagickTypeEnum#getIcon(int, String, String...)
      * @return An ItemStack of the wanted icon.
      */
-    public ItemStack getIcon(@NotNull final String displayName) { return getIcon(1, displayName); }
+    public ItemStack getIcon(@NotNull final String displayName, final String... displayLore) { return getIcon(1, displayName, displayLore); }
 
     /**
      * Get the icon associated with the Magick Type.
@@ -476,12 +479,12 @@ public enum MagickTypeEnum {
 
 
     /**
-     * Get the spell by its id.
+     * Get the spell icon by its id.
      *
      * @param spellId The id of the spell wanted.
-     * @return An ItemStack of the wanted spell.
+     * @return An ItemStack of the wanted spell icon.
      */
-    public ItemStack getSpell(final int spellId) {
+    public ItemStack getSpellIcon(final int spellId) {
         try {
             return this.spellList[spellId];
         } catch (final NullPointerException e) {
