@@ -2,7 +2,6 @@ package fr.mayayoh.magick.gui.playerinfo;
 
 import fr.mayayoh.magick.gui.GUIClass;
 import fr.mayayoh.magick.util.ItemBuilder;
-import fr.mayayoh.magick.util.MagickRegistry;
 import fr.mayayoh.magick.util.MagickTypeEnum;
 import fr.mayayoh.magick.util.lib.MagickLib;
 import fr.mayayoh.magick.util.lib.RandomLib;
@@ -19,16 +18,14 @@ public class PlayerInfoMenu extends GUIClass {
 
     private final Player player;
 
-    public PlayerInfoMenu(final Player v, final Player p) {
-        super(v);
-        this.player = p;
+    public PlayerInfoMenu(final Player viewer, final Player player) {
+        super(viewer);
+        this.player = player;
         createInventory();
     }
 
     @Override
     public void onClick(final InventoryClickEvent e) {
-        e.setCancelled(true);
-
         final Player p = Bukkit.getPlayer(player.getName());
         try {
             switch (e.getRawSlot()) {
@@ -39,12 +36,12 @@ public class PlayerInfoMenu extends GUIClass {
                 }
                 case 11, 15 -> {
                     assert p != null;
-                    final ChangeMagickMenu changeMagickMenu = new ChangeMagickMenu(viewer, p);
-                    changeMagickMenu.openInventory(); //e.getRawSlot() == 11 ? "first" : "second"
+                    final ChangeMagickMenu changeMagickMenu = new ChangeMagickMenu(viewer, p, e.getRawSlot() == 11);
+                    changeMagickMenu.openInventory();
                 }
                 default -> { }
             }
-        } catch (final AssertionError a) {
+        } catch (final AssertionError ex) {
             viewer.closeInventory();
             viewer.sendMessage(ChatColor.GOLD + "/!\\ " + ChatColor.RESET + ChatColor.BOLD + player.getName() + ChatColor.RESET + ChatColor.RED + " isn't online anymore.");
         }
@@ -52,8 +49,6 @@ public class PlayerInfoMenu extends GUIClass {
 
     @Override
     protected void createInventory() {
-        MagickRegistry.getInstance().setCurrentMenu(player, this);
-
         inv = Bukkit.createInventory(null, 36, ChatColor.BLACK.toString() + ChatColor.BOLD + player.getName() + ChatColor.RESET + "'s Magick Info");
 
         final MagickTypeEnum firstType = MagickLib.getMagickType(player, true);

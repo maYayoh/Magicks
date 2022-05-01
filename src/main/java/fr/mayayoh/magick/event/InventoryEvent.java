@@ -18,8 +18,10 @@ public class InventoryEvent implements Listener {
             e.setCancelled(true);
         } else {
             final GUIClass menu = MagickRegistry.getInstance().getCurrentMenu(v);
-            if (menu != null)
+            if (menu != null) {
+                e.setCancelled(true);
                 menu.onClick(e);
+            }
         }
     }
 

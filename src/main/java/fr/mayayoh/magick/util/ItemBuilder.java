@@ -209,8 +209,8 @@ public final class ItemBuilder {
             final Method mtd = skullMeta.getClass().getDeclaredMethod("setProfile", GameProfile.class);
             mtd.setAccessible(true);
             mtd.invoke(skullMeta, profile);
-        } catch (final IllegalAccessException | NoSuchMethodException | InvocationTargetException e) {
-            e.printStackTrace();
+        } catch (final IllegalAccessException | NoSuchMethodException | InvocationTargetException ex) {
+            ex.printStackTrace();
         }
 
         skullMeta.setDisplayName(displayName);

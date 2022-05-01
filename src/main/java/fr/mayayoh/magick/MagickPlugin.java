@@ -34,10 +34,10 @@ public final class MagickPlugin extends JavaPlugin implements Listener {
     public void onEnable() {
         MagickPlugin.instance = this;
 
-//        this.getCommand("magick").setExecutor(new CommandMagick());
+        Objects.requireNonNull(this.getCommand("magick")).setExecutor(new MagickCommand());
         Objects.requireNonNull(this.getCommand("playerinfo")).setExecutor(new PlayerInfoCommand());
-//        this.getCommand("editspells").setExecutor(new CommandEditSpells());
-//
+        Objects.requireNonNull(this.getCommand("editspells")).setExecutor(new EditSpellCommand());
+
         Bukkit.getServer().getPluginManager().registerEvents(new GeneralEvent(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new InventoryEvent(), this);
 //        Bukkit.getServer().getPluginManager().registerEvents(new SpellsEvents(), this);
@@ -58,7 +58,6 @@ public final class MagickPlugin extends JavaPlugin implements Listener {
         // Check if the file already exists
         if (!dataFile.exists()) {
             // If not, create it
-            final boolean ignored = dataFile.getParentFile().mkdirs();
             saveResource("magickData.yml", false);
         }
 
@@ -66,8 +65,8 @@ public final class MagickPlugin extends JavaPlugin implements Listener {
         data = new YamlConfiguration();
         try {
             data.load(dataFile);
-        } catch (final IOException | InvalidConfigurationException e) {
-            e.printStackTrace();
+        } catch (final IOException | InvalidConfigurationException ex) {
+            ex.printStackTrace();
             // If fail to load the data, disable the plugin
             this.getPluginLoader().disablePlugin(this);
         }

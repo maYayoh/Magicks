@@ -67,12 +67,10 @@ public class MagickRegistry {
 
     public void setCurrentMenu(@NotNull final Player p, @Nullable final GUIClass menu) { setCurrentMenu(p.getUniqueId(), menu); }
     public void setCurrentMenu(@NotNull final UUID u, @Nullable final GUIClass menu) {
-        if (menu == null) {
-            currentMenu.put(u, null);
+        if (menu == null)
             removeCurrentMenu(u);
-        } else {
+        else
             currentMenu.put(u, menu);
-        }
     }
 
     public void removeCurrentMenu(@NotNull final Player p) { removeCurrentMenu(p.getUniqueId()); }
