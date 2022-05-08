@@ -34,7 +34,7 @@ public final class GeometryLib {
         return loc;
     }
 
-    public static List<Location> getCubeOutline(final Location blockPos, final int n) {
+    public static Location[] getCubeOutline(final Location blockPos, final int n) {
         List<Location> loc = new ArrayList<>();
 
         final Location nwb = new Location(blockPos.getWorld(), blockPos.getBlockX(), blockPos.getBlockY(), blockPos.getBlockZ());
@@ -61,7 +61,7 @@ public final class GeometryLib {
         loc.addAll(Arrays.asList(getLinePositions(swb, seb, n)));
         loc.addAll(Arrays.asList(getLinePositions(swt, set, n)));
 
-        return loc;
+        return loc.toArray(new Location[0]);
     }
 
 

@@ -3,8 +3,11 @@ package fr.mayayoh.magick;
 import fr.mayayoh.magick.command.EditSpellCommand;
 import fr.mayayoh.magick.command.MagickCommand;
 import fr.mayayoh.magick.command.PlayerInfoCommand;
+import fr.mayayoh.magick.event.GatherEvent;
 import fr.mayayoh.magick.event.GeneralEvent;
 import fr.mayayoh.magick.event.InventoryEvent;
+import fr.mayayoh.magick.event.SpellEvent;
+import fr.mayayoh.magick.util.GatherLoop;
 import fr.mayayoh.magick.util.MagickRegistry;
 import lombok.Getter;
 import lombok.SneakyThrows;
@@ -41,7 +44,10 @@ public final class MagickPlugin extends JavaPlugin implements Listener {
 
         Bukkit.getServer().getPluginManager().registerEvents(new GeneralEvent(), this);
         Bukkit.getServer().getPluginManager().registerEvents(new InventoryEvent(), this);
-//        Bukkit.getServer().getPluginManager().registerEvents(new SpellsEvents(), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new SpellEvent(), this);
+        Bukkit.getServer().getPluginManager().registerEvents(new GatherEvent(), this);
+
+        new GatherLoop().runTaskTimer(this, 10, 5);
 
 
         // Create plugin folder
@@ -59,7 +65,7 @@ public final class MagickPlugin extends JavaPlugin implements Listener {
         // Check if the file already exists
         if (!dataFile.exists()) {
             // If not, create it
-            saveResource("magickData.yml", false);
+            saveResource("magickData.yml", true);
         }
 
         // Load the data from the file in a variable
@@ -79,10 +85,8 @@ public final class MagickPlugin extends JavaPlugin implements Listener {
 
         Bukkit.getServer().getOnlinePlayers().forEach(player -> {
 
-            if (MagickRegistry.getInstance().isPlayerInMagick(player)) {
+            if (MagickRegistry.getInstance().isPlayerInMagick(player))
                 MagickRegistry.getInstance().loadInventory(player);
-                MagickRegistry.getInstance().setMode(player, false);
-            }
 
         });
 

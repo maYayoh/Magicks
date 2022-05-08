@@ -35,17 +35,15 @@ public final class MagickLib {
 
     public static ItemStack[] getSpellList(final Player p, final boolean isFirstType) { return getSpellList(p.getUniqueId(), isFirstType); }
     public static ItemStack[] getSpellList(final UUID u, final boolean isFirstType) {
-        final MagickTypeEnum magickType = getMagickType(u, isFirstType);
-        return magickType == null ? null : magickType.getSpellList();
+        return getMagickType(u, isFirstType).getSpellIconList();
     }
 
     @NotNull public static ItemStack[] getSpellConfig(final Player p) { return getSpellConfig(p.getUniqueId()); }
     @NotNull
     public static ItemStack[] getSpellConfig(final UUID u) {
-        ItemStack[] spells = new ItemStack[]{ null, null, null, null, null, null, null, null, null };
+        ItemStack[] spells = new ItemStack[9];
         final ItemStack[] p1spells = getSpellList(u, true);
         final ItemStack[] p2spells = getSpellList(u, false);
-        if (p1spells == null || p2spells == null) return spells;
 
         String slot;
         for (int i=1; i<10; i++) {
