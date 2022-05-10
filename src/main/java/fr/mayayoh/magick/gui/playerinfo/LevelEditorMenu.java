@@ -46,7 +46,6 @@ public class LevelEditorMenu extends GUIClass {
                         if (e.getCurrentItem().getType().equals(Material.LIME_STAINED_GLASS_PANE)) {
                             final String path = e.getRawSlot() == 2 ? "first.level" : "second.level";
                             MagickLib.setMagickData(p, path, String.valueOf(Integer.parseInt(MagickLib.getMagickData(path, p)) + 1));
-                            MagickPlugin.getInstance().saveData();
 
                             updateLevelItems();
                         }
@@ -56,14 +55,13 @@ public class LevelEditorMenu extends GUIClass {
                         if (e.getCurrentItem().getType().equals(Material.RED_STAINED_GLASS_PANE)) {
                             final String path = e.getRawSlot() == 20 ? "first.level" : "second.level";
                             MagickLib.setMagickData(p, path, String.valueOf(Integer.parseInt(MagickLib.getMagickData(path, p)) - 1));
-                            MagickPlugin.getInstance().saveData();
 
                             updateLevelItems();
                         }
                     }
                     default -> { }
                 }
-            } catch (final AssertionError | IOException ex) {
+            } catch (final AssertionError ex) {
                 viewer.sendMessage(ChatColor.GOLD + "/!\\ " + ChatColor.RESET + ChatColor.BOLD + player.getName() + ChatColor.RESET + ChatColor.RED + " isn't online anymore.");
             }
         }

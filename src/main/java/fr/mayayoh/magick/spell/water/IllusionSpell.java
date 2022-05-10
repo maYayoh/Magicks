@@ -77,7 +77,7 @@ public class IllusionSpell extends SpellClass {
 
             Bukkit.getScheduler().runTaskLater(MagickPlugin.getInstance(), () -> {
                 con.sendPacket(new PacketPlayOutPlayerInfo(PacketPlayOutPlayerInfo.EnumPlayerInfoAction.REMOVE_PLAYER, entityPlayer)); // Remove from tab
-            }, 1);
+            }, 5);
 
             Bukkit.getScheduler().runTaskLater(MagickPlugin.getInstance(), () -> {
                 ((CraftPlayer) onlinePlayer).getHandle().playerConnection.sendPacket(new PacketPlayOutEntityDestroy(entityPlayer.getId())); // Remove from tab

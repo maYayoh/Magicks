@@ -37,7 +37,6 @@ public class ChangeMagickMenu extends GUIClass {
                 case 15, 16, 24, 25, 33, 34 -> {
                     assert p != null;
                     MagickLib.setMagickData(p, (isFirstType ? "first" : "second") + ".type", String.valueOf(e.getRawSlot() / 9 * 2 + e.getRawSlot() % 9 / 7 - 1));
-                    MagickPlugin.getInstance().saveData();
                     final PlayerInfoMenu menu = new PlayerInfoMenu(viewer, p);
                     menu.openInventory();
                 }
@@ -45,9 +44,6 @@ public class ChangeMagickMenu extends GUIClass {
             }
         } catch (final AssertionError ex) {
             viewer.sendMessage(ChatColor.GOLD + "/!\\ " + ChatColor.RESET + ChatColor.BOLD + player.getName() + ChatColor.RESET + ChatColor.RED + " isn't online anymore.");
-        } catch (final IOException ex) {
-            ex.printStackTrace();
-            MagickPlugin.getInstance().getPluginLoader().disablePlugin(MagickPlugin.getInstance());
         }
     }
 

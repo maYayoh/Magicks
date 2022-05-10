@@ -7,6 +7,7 @@ import fr.mayayoh.magick.event.GatherEvent;
 import fr.mayayoh.magick.event.GeneralEvent;
 import fr.mayayoh.magick.event.InventoryEvent;
 import fr.mayayoh.magick.event.SpellEvent;
+import fr.mayayoh.magick.util.AutoSave;
 import fr.mayayoh.magick.util.GatherLoop;
 import fr.mayayoh.magick.util.MagickRegistry;
 import lombok.Getter;
@@ -77,6 +78,8 @@ public final class MagickPlugin extends JavaPlugin implements Listener {
             // If fail to load the data, disable the plugin
             this.getPluginLoader().disablePlugin(this);
         }
+
+        new AutoSave().runTaskTimer(this, 10, 5*60*20); // Save every 5 minutes
     }
 
     @SneakyThrows

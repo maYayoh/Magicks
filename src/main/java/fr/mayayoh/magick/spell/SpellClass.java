@@ -1,6 +1,5 @@
 package fr.mayayoh.magick.spell;
 
-import fr.mayayoh.magick.event.SpellEvent;
 import fr.mayayoh.magick.util.MagickTypeEnum;
 import fr.mayayoh.magick.util.lib.MagickLib;
 import lombok.Getter;
@@ -27,13 +26,11 @@ public abstract class SpellClass {
     protected abstract void spellEffect(final Player player);
     public void castSpell(final Player player, final MagickTypeEnum type) {
         final boolean isPlayerFirstType = type == MagickLib.getMagickType(player, true);
-        player.sendMessage(type+" | "+MagickLib.getMagickType(player, true)+" : "+isPlayerFirstType);
-
 
         final int essenceCount = Integer.parseInt(MagickLib.getMagickData((isPlayerFirstType ? "first" : "second") + ".essences", player));
         if (essenceCount > 0) {
             MagickLib.setMagickData(player, (isPlayerFirstType ? "first" : "second") + ".essences", String.valueOf(essenceCount-1));
-            SpellEvent.showEssenceCount(player);
+            MagickLib.showEssenceCount(player);
 
             if (player.getFoodLevel() > cost)
                 player.setFoodLevel(player.getFoodLevel() - cost);

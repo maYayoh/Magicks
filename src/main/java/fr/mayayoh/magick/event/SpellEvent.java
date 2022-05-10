@@ -2,6 +2,7 @@ package fr.mayayoh.magick.event;
 
 import fr.mayayoh.magick.MagickPlugin;
 import fr.mayayoh.magick.spell.SpellClass;
+import fr.mayayoh.magick.util.GatherLoop;
 import fr.mayayoh.magick.util.ItemBuilder;
 import fr.mayayoh.magick.util.MagickRegistry;
 import fr.mayayoh.magick.util.MagickTypeEnum;
@@ -10,10 +11,8 @@ import fr.mayayoh.magick.util.lib.RandomLib;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.FluidCollisionMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Pose;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
@@ -24,8 +23,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Objects;
-
-import static fr.mayayoh.magick.event.GatherEvent.startGathering;
 
 public class SpellEvent implements Listener {
     @EventHandler
@@ -58,14 +55,13 @@ public class SpellEvent implements Listener {
             }
         } else if (e.getAction().equals(Action.LEFT_CLICK_BLOCK)
                 && player.isSneaking()
-                && player.getInventory().getItemInMainHand().getType().equals(Material.AIR)
-        ) {
+                && player.getInventory().getItemInMainHand().getType().equals(Material.AIR)) {
             if (registry.getGatherInfo(player) != null) {
                 if (Objects.requireNonNull(registry.getGatherInfo(player)).get("block").equals(e.getClickedBlock())) {
                     return;
                 }
             }
-            startGathering(player);
+            GatherEvent.startGathering(player);
         }
     }
 
@@ -91,7 +87,7 @@ public class SpellEvent implements Listener {
                     player.getInventory().setItem(i, null);
                 }
 
-                showEssenceCount(player);
+                MagickLib.showEssenceCount(player);
 
                 final Material[] sgp = new Material[]{Material.WHITE_STAINED_GLASS_PANE, Material.ORANGE_STAINED_GLASS_PANE, Material.MAGENTA_STAINED_GLASS_PANE, Material.LIGHT_BLUE_STAINED_GLASS_PANE, Material.YELLOW_STAINED_GLASS_PANE, Material.LIME_STAINED_GLASS_PANE, Material.PINK_STAINED_GLASS_PANE, Material.GRAY_STAINED_GLASS_PANE, Material.CYAN_STAINED_GLASS_PANE, Material.PURPLE_STAINED_GLASS_PANE, Material.BLUE_STAINED_GLASS_PANE, Material.BROWN_STAINED_GLASS_PANE, Material.GREEN_STAINED_GLASS_PANE, Material.RED_STAINED_GLASS_PANE};
                 final ItemStack defaultSeparator = ItemBuilder.createItem(Material.BLACK_STAINED_GLASS_PANE);
@@ -116,33 +112,8 @@ public class SpellEvent implements Listener {
     public void onPlayerChangeSlot(final PlayerItemHeldEvent e) {
         final Player player = e.getPlayer();
         if (MagickRegistry.getInstance().isPlayerInMagick(player))
-            Bukkit.getScheduler().runTaskLater(MagickPlugin.getInstance(), () -> showEssenceCount(player), 1);
+            Bukkit.getScheduler().runTaskLater(MagickPlugin.getInstance(), () -> MagickLib.showEssenceCount(player), 1);
     }
 
-
-
-
-    public static void showEssenceCount(final Player player) {
-        final MagickRegistry registry = MagickRegistry.getInstance();
-
-        final ItemStack itemHeld = player.getInventory().getItemInMainHand();
-        if (itemHeld.getType().equals(Material.PLAYER_HEAD)) {
-            final ItemMeta itemMeta = itemHeld.getItemMeta();
-            Validate.notNull(itemMeta, "The ItemStack doesn't have any ItemMeta.");
-            MagickTypeEnum magickType = MagickTypeEnum.NONE;
-            for (MagickTypeEnum type : MagickTypeEnum.values()) {
-                if (ChatColor.stripColor(type.toString() + " Spell").equals(ChatColor.stripColor(Objects.requireNonNull(itemMeta.getLore()).get(0)))) {
-                    magickType = type;
-                    break;
-                }
-            }
-
-            player.getInventory().setItemInOffHand(
-                    magickType.getRelativeIcon(
-                            Integer.parseInt(MagickLib.getMagickData((MagickLib.getMagickType(player, true) == magickType ? "first" : "second") + ".essences", player)),
-                            ChatColor.RESET + "Number of " + magickType + ChatColor.RESET+ " essences")
-            );
-        } else player.getInventory().setItemInOffHand(new ItemStack(Material.AIR));
-    }
 }
 

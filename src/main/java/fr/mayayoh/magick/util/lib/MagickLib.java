@@ -1,11 +1,17 @@
 package fr.mayayoh.magick.util.lib;
 
 import fr.mayayoh.magick.MagickPlugin;
+import fr.mayayoh.magick.util.MagickRegistry;
 import fr.mayayoh.magick.util.MagickTypeEnum;
+import org.apache.commons.lang.Validate;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -57,5 +63,29 @@ public final class MagickLib {
         }
 
         return spells;
+    }
+
+
+    public static void showEssenceCount(final Player player) {
+        final MagickRegistry registry = MagickRegistry.getInstance();
+
+        final ItemStack itemHeld = player.getInventory().getItemInMainHand();
+        if (itemHeld.getType().equals(Material.PLAYER_HEAD)) {
+            final ItemMeta itemMeta = itemHeld.getItemMeta();
+            Validate.notNull(itemMeta, "The ItemStack doesn't have any ItemMeta.");
+            MagickTypeEnum magickType = MagickTypeEnum.NONE;
+            for (MagickTypeEnum type : MagickTypeEnum.values()) {
+                if (ChatColor.stripColor(type.toString() + " Spell").equals(ChatColor.stripColor(Objects.requireNonNull(itemMeta.getLore()).get(0)))) {
+                    magickType = type;
+                    break;
+                }
+            }
+
+            player.getInventory().setItemInOffHand(
+                    magickType.getRelativeIcon(
+                            Integer.parseInt(MagickLib.getMagickData((MagickLib.getMagickType(player, true) == magickType ? "first" : "second") + ".essences", player)),
+                            ChatColor.RESET + "Number of " + magickType + ChatColor.RESET+ " essences")
+            );
+        } else player.getInventory().setItemInOffHand(new ItemStack(Material.AIR));
     }
 }

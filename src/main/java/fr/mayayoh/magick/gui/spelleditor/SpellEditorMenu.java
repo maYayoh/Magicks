@@ -78,11 +78,11 @@ public class SpellEditorMenu extends GUIClass {
         final int p1Lvl = Integer.parseInt(MagickLib.getMagickData("first.level", viewer));
         final int p2Lvl = Integer.parseInt(MagickLib.getMagickData("second.level", viewer));
 
-        inv.setItem(2, firstType.getIcon(ChatColor.RESET.toString() + firstType,
-                ChatColor.RESET + "Level: " + (p1Lvl == 21 ? "Master" : p1Lvl)));
+        inv.setItem(2, firstType.getRelativeIcon(Integer.parseInt(MagickLib.getMagickData("first.essences", viewer)),
+                ChatColor.RESET.toString() + firstType, ChatColor.RESET + "Level: " + (p1Lvl == 21 ? "Master" : p1Lvl)));
 
-        inv.setItem(6, secondType.getIcon(ChatColor.RESET.toString() + secondType,
-                ChatColor.RESET + "Level: " + p2Lvl));
+        inv.setItem(6, secondType.getRelativeIcon(Integer.parseInt(MagickLib.getMagickData("second.essences", viewer)),
+                ChatColor.RESET.toString() + secondType, ChatColor.RESET + "Level: " + p2Lvl));
 
         updateSpellsShown();
     }
