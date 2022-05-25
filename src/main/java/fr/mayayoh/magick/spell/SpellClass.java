@@ -1,6 +1,7 @@
 package fr.mayayoh.magick.spell;
 
 import fr.mayayoh.magick.util.MagickTypeEnum;
+import fr.mayayoh.magick.util.lib.LevelLib;
 import fr.mayayoh.magick.util.lib.MagickLib;
 import lombok.Getter;
 import org.bukkit.entity.Player;
@@ -8,17 +9,27 @@ import org.bukkit.inventory.ItemStack;
 
 public abstract class SpellClass {
     protected final int cost;
+    protected final int xpGain;
     @Getter protected final int spellId;
     @Getter protected final ItemStack spellIcon;
 
     public SpellClass(final MagickTypeEnum magickType, final int spellId, final ItemStack spellIcon) {
         this.cost = 0;
+        this.xpGain = 0;
         this.spellId = spellId;
         this.spellIcon = spellIcon;
     }
 
     public SpellClass(final int cost, final int spellId, final ItemStack spellIcon) {
         this.cost = cost;
+        this.xpGain = 5;
+        this.spellId = spellId;
+        this.spellIcon = spellIcon;
+    }
+
+    public SpellClass(final int cost, final int xpGain, final int spellId, final ItemStack spellIcon) {
+        this.cost = cost;
+        this.xpGain = xpGain;
         this.spellId = spellId;
         this.spellIcon = spellIcon;
     }
@@ -39,8 +50,10 @@ public abstract class SpellClass {
                 player.setFoodLevel(0);
                 player.damage(healthCost);
             } else player.setFoodLevel(0);
-            if (!player.isDead())
+            if (!player.isDead()) {
+                LevelLib.addXp(player, isPlayerFirstType, xpGain);
                 spellEffect(player);
+            }
         }
     }
 }

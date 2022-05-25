@@ -1,9 +1,9 @@
 package fr.mayayoh.magick.gui.playerinfo;
 
-import fr.mayayoh.magick.MagickPlugin;
 import fr.mayayoh.magick.gui.GUIClass;
 import fr.mayayoh.magick.util.ItemBuilder;
 import fr.mayayoh.magick.util.MagickTypeEnum;
+import fr.mayayoh.magick.util.lib.LevelLib;
 import fr.mayayoh.magick.util.lib.MagickLib;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
@@ -13,8 +13,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.SkullMeta;
-
-import java.io.IOException;
 
 public class LevelEditorMenu extends GUIClass {
 
@@ -44,18 +42,14 @@ public class LevelEditorMenu extends GUIClass {
                     case 2, 6 -> {
                         assert p != null;
                         if (e.getCurrentItem().getType().equals(Material.LIME_STAINED_GLASS_PANE)) {
-                            final String path = e.getRawSlot() == 2 ? "first.level" : "second.level";
-                            MagickLib.setMagickData(p, path, String.valueOf(Integer.parseInt(MagickLib.getMagickData(path, p)) + 1));
-
+                            LevelLib.addLevel(p, e.getRawSlot() == 2);
                             updateLevelItems();
                         }
                     }
                     case 20, 24 -> {
                         assert p != null;
                         if (e.getCurrentItem().getType().equals(Material.RED_STAINED_GLASS_PANE)) {
-                            final String path = e.getRawSlot() == 20 ? "first.level" : "second.level";
-                            MagickLib.setMagickData(p, path, String.valueOf(Integer.parseInt(MagickLib.getMagickData(path, p)) - 1));
-
+                            LevelLib.addLevel(p, e.getRawSlot() == 20, -1);
                             updateLevelItems();
                         }
                     }

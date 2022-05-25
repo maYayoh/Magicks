@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 public class DefaultSpell extends SpellClass {
 
     public DefaultSpell() {
-        super(MagickTypeEnum.NONE, -1,
+        super(0, 0, -1,
                 ItemBuilder.getCustomHead("4e2ce3372a3ac97fdda5638bef24b3bc49f4facf751fe9cad645f15a7fb8397c"));
     }
 

@@ -3,6 +3,7 @@ package fr.mayayoh.magick.util;
 import fr.mayayoh.magick.MagickPlugin;
 import fr.mayayoh.magick.event.GatherEvent;
 import fr.mayayoh.magick.util.lib.GeometryLib;
+import fr.mayayoh.magick.util.lib.LevelLib;
 import fr.mayayoh.magick.util.lib.MagickLib;
 import fr.mayayoh.magick.util.lib.RandomLib;
 import org.bukkit.*;
@@ -37,6 +38,7 @@ public class GatherLoop extends BukkitRunnable {
                             player.playSound(position, Sound.ENTITY_EXPERIENCE_ORB_PICKUP, SoundCategory.BLOCKS, 1, ((float) RandomLib.randomInteger(50, 150)) / 100);
                             final String path = MagickLib.getMagickType(player, true) == type ? "first.essences" : "second.essences";
                             MagickLib.setMagickData(player, path, String.valueOf(Integer.parseInt(MagickLib.getMagickData(path, player)) + 1));
+                            LevelLib.addXp(player, MagickLib.getMagickType(player, true) == type, 5);
 
                             Bukkit.getScheduler().runTaskLater(MagickPlugin.getInstance(), () -> GatherEvent.startGathering(player), 5);
                         } else {
